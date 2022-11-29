@@ -24,6 +24,8 @@
 #pragma once
 
 #include "types.h"
+
+// move this to "extended" or "bit_io" or similar
 //#include "here.h"
 #include <string>
 
@@ -39,7 +41,7 @@
 // mask generation
 // popcounts
 
-
+// use std::enable_if
 template<bool B, class T, class F>
     struct bit_conditional {
         using type = F;
@@ -69,10 +71,12 @@ template<unsigned B>
 
 // signed and unsigned types please
 
-template<unsigned B>
-struct bits {
-    // deduce minimal primitive type to store bits
-    // optimizes size use
+//
+
+template<unsigned B> struct bits {
+    /// @var
+    ///
+    ///
     using bps_t = bit_prim_store<B>;
     // "all bits set"
     // const or constexpr? doesn't matter
@@ -270,6 +274,8 @@ template <unsigned V, char H, char...T>
         return parse_binary_literal<((V << 1) | (H & 1)), T...>(); // (C)
     }
 
+// ideally we'd discover the length based on sizeof...(STR) *but* this would change
+// the return type... OTOH... is that allowable? may end up with stupid macros
 #define BITS_B_UDL_(B) \
     template <char... STR> \
         constexpr bits<B> operator"" _b ##B() { \

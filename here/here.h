@@ -60,7 +60,7 @@ struct dbg_out_off //: public std::ostream
 };
 
 // change to "here_on"
-#ifdef DEBUG_ON
+#ifdef HERE_ON
 #define here dbg_out_on() << ("file://" __FILE__  ":") << __LINE__ << ": "
 #define h_wrap(X) " " << #X << "=" << X
 #else
